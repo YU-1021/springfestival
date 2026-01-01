@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喜迎 2026 丙午马年</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 烟花音效 (可选，点击屏幕时播放) -->
+    <audio id="boomSound">
+        <source src="assets/audio/boom.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 烟花画布层 (最顶层) -->
+    <canvas id="fireworksCanvas"></canvas>
+
+    <!-- 视差背景层 -->
+    <div class="parallax-container" id="parallaxContainer">
+        <!-- 层1: 祥云 (深处) -->
+        <div class="layer layer-1" data-speed="0.02">
+            <div class="cloud c1"></div>
+            <div class="cloud c2"></div>
+        </div>
+
+        <!-- 层2: 灯笼 (中部) -->
+        <div class="layer layer-2" data-speed="0.05">
+            <div class="lantern l1">
+                <div class="lantern-body">春</div>
+            </div>
+            <div class="lantern l2">
+                <div class="lantern-body">福</div>
+            </div>
+        </div>
+
+        <!-- 层3: 核心内容 (最浅层) -->
+        <div class="layer layer-3" data-speed="0.08">
+            <div class="main-content">
+                <h1 class="title">喜迎 2026 春节</h1>
+                <div class="couplet">
+                    <span>金马奔腾迎盛世</span>
+                    <span class="divider">✦</span>
+                    <span>瑞雪纷飞兆丰年</span>
+                </div>
+                
+                <div class="countdown-box">
+                    <p class="label">距离 2026 丙午马年还有：</p>
+                    <div id="countdown" class="timer">
+                        <div class="time-unit"><span id="days">00</span><small>天</small></div>
+                        <div class="time-unit"><span id="hours">00</span><small>时</small></div>
+                        <div class="time-unit"><span id="minutes">00</span><small>分</small></div>
+                        <div class="time-unit"><span id="seconds">00</span><small>秒</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 庆祝遮罩层 -->
+    <div id="celebrationOverlay" class="celebration-overlay hidden">
+        <div class="msg-box">
+            <h1>春节快乐！</h1>
+            <p>万事如意 · 阖家幸福</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

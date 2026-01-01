@@ -1,0 +1,231 @@
+:root {
+    --red-primary: #D9381E;
+    --red-dark: #8E0E00;
+    --gold: #F2A900;
+    --gold-light: #FCE38A;
+    --bg-gradient: radial-gradient(circle at center, #b31217, #2c0303);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-gradient);
+    color: var(--gold);
+    font-family: 'Noto Serif SC', serif;
+    overflow: hidden; /* 禁止页面滚动 */
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+/* 烟花 Canvas - 确保背景透明 */
+#fireworksCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100; /* 在内容之上 */
+    pointer-events: none; /* 让鼠标点击穿透给JS处理 */
+    background: transparent;
+}
+
+/* 视差容器 */
+.parallax-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.layer {
+    position: absolute;
+    width: 110%;
+    height: 110%;
+    top: -5%;
+    left: -5%;
+    pointer-events: none;
+    transition: transform 0.1s linear;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 内容布局 */
+.main-content {
+    text-align: center;
+    z-index: 10;
+    position: relative;
+    pointer-events: auto; 
+    margin-top: -50px;
+}
+
+.title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: clamp(3rem, 8vw, 6rem);
+    text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+    color: var(--gold-light);
+}
+
+.couplet {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.countdown-box {
+    background: rgba(142, 14, 0, 0.4);
+    backdrop-filter: blur(5px);
+    padding: 20px 40px;
+    border-radius: 15px;
+    border: 1px solid rgba(242, 169, 0, 0.5);
+    display: inline-block;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.timer {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-unit span {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px var(--gold);
+    min-width: 60px;
+}
+
+.time-unit small {
+    font-size: 0.9rem;
+    color: var(--gold-light);
+    margin-top: 5px;
+}
+
+/* 纯 CSS 绘制灯笼 */
+.lantern {
+    position: absolute;
+    width: 80px;
+    height: 100px;
+}
+
+.lantern-body {
+    width: 60px;
+    height: 50px;
+    background: var(--red-primary);
+    border-radius: 15px;
+    border-top: 4px solid var(--gold);
+    border-bottom: 4px solid var(--gold);
+    box-shadow: 0 0 20px rgba(255, 50, 50, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Ma Shan Zheng', cursive;
+    color: var(--gold);
+    font-size: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.lantern-body::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    width: 4px;
+    height: 30px;
+    background: var(--gold);
+}
+
+.l1 { top: 15%; left: 15%; transform: rotate(-5deg); animation: swing 4s ease-in-out infinite alternate;}
+.l2 { top: 20%; right: 15%; transform: rotate(5deg); animation: swing 5s ease-in-out infinite alternate-reverse;}
+
+/* 纯 CSS 绘制云朵 */
+.cloud {
+    position: absolute;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50px;
+}
+.c1 { width: 250px; height: 80px; bottom: 25%; left: 10%; filter: blur(30px);}
+.c2 { width: 200px; height: 60px; top: 15%; right: 10%; filter: blur(20px);}
+
+/* 庆祝层 */
+.celebration-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 150;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.msg-box {
+    text-align: center;
+}
+
+.msg-box h1 {
+    font-size: 5rem;
+    color: var(--gold);
+    font-family: 'Ma Shan Zheng';
+    animation: zoomIn 1s ease-out;
+}
+
+.msg-box p {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+/* 动画定义 */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes swing {
+    0% { transform: rotate(-5deg); }
+    100% { transform: rotate(5deg); }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .title { font-size: 3rem; }
+    .couplet { font-size: 1rem; }
+    .timer { gap: 10px; }
+    .time-unit span { font-size: 1.8rem; min-width: 40px; }
+    .l1 { left: 5%; top: 10%; transform: scale(0.8); }
+    .l2 { right: 5%; top: 10%; transform: scale(0.8); }
+    .countdown-box { padding: 15px 20px; width: 90%; }
+}
